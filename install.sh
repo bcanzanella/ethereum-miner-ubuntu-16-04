@@ -26,15 +26,18 @@ fi
 
 if ! [ -x "$(command -v amdgpu)" ]; then
     echo "do you want to install $AMD_VERSION (y/[n])?"
-    read input_variable
-    if [ $input_variable = "y" ]; then
-        cd $AMD_VERSION
-        echo "installing $AMD_VERSION..."
-        ./amdgpu-pro-install --opencl=legacy,rocm --headless
-        REQUIRES_REBOOT=true
-    else
-        echo ""
-    fi
+    select result in y n
+    do
+        if [ $result = "y" ]; then
+            cd $AMD_VERSION
+            echo "installing $AMD_VERSION..."
+            ./amdgpu-pro-install --opencl=legacy,rocm --headless
+            REQUIRES_REBOOT=true
+        else
+            echo ""
+        fi
+        break;
+    done
 fi
 
 cd ~/Downloads
@@ -83,14 +86,17 @@ else
 fi
 
 if service --status-all | grep 'lightdm'; then
-    echo "do you want to disable lightdm (y/[n])?"
-    read input_variable
-    if [ $input_variable = "y" ]; then
-        sudo systemctl disable lightdm.service
-        REQUIRES_REBOOT=true
-    else
-        echo ""
-    fi
+    echo "do you want to disable lightdm service?"
+    select result in y n
+    do
+        if [ $result = "y" ]; then
+            sudo systemctl disable lightdm.service
+            REQUIRES_REBOOT=true
+        else
+            echo ""
+        fi
+        break;
+    done
 else
     echo ""
 fi
