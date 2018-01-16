@@ -102,13 +102,13 @@ export GPU_MAX_ALLOC_PERCENT=100
 export GPU_SINGLE_ALLOC_PERCENT=100
 export GPU_FORCE_64BIT_PTR=1
 
-./$CLAYMORE_MINER/ethdcrminer64 -epool us1.ethermine.org:4444 -ewal 0x$ETH_WALLET_ADDRESS.$ETH_RIG_NAME -epsw x"
+./$CLAYMORE_MINER/ethdcrminer64 -epool us1.ethermine.org:4444 -ewal 0x$ETH_WALLET_ADDRESS.$ETH_RIG_NAME -epsw x -asm 0 -mode 0"
 
     echo "what is your DECRED wallet address? (optional)?"
     read DECRED_WALLET_ADDRESS
 
     if [ ! DECRED_WALLET_ADDRESS = "" ]; then
-        CLAYMORE="$CLAYMORE -dpool stratum+tcp://yiimp.ccminer.org:3252 -dwal $DECRED_WALLET_ADDRESS -dpsw x"
+        CLAYMORE="$CLAYMORE -dpool stratum+tcp://yiimp.ccminer.org:4252 -dwal $DECRED_WALLET_ADDRESS -dpsw x"
     fi
 
     echo "$CLAYMORE" > start_claymore.sh
